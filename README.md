@@ -189,6 +189,6 @@ This runs 4 cryptographic assertions directly against the running API:
 ## 6. Video Demo (1:30 - 2:00 Minutes)
 
 <video width="640" height="360" controls>
-  <source src="/Users/chou/Coding/Source/competition/rmit-hackathon/kneexpert-submission/RMIT-Challenge-2/RMIT Hackathon.mp4" type="video/mp4">
+  <source src="/RMIT Hackathon.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
