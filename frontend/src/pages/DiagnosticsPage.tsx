@@ -11,6 +11,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { type Patient, type Modality } from "@/data/patients";
 import { usePatients, type ConfirmDiagnosisPayload } from "@/context/PatientContext";
+import { useTideTrust } from "@/context/TideTrustContext";
 import { predictXray, predictMri, predictMriSample, fetchBackboneHealth, type XrayPredictResponse, type MriPredictResponse } from "@/lib/diagnosticApi";
 import {
   buildGradcamViewItems,
@@ -1916,6 +1917,7 @@ function DiagnosticWorkspace({
   cohortFiles?: Partial<Record<Modality, File>>;
 }) {
   const { getPatient, confirmDiagnosis, applyAnalysisResult } = usePatients();
+  const { currentRole, patientApproved, toggleConsent } = useTideTrust();
   const navigate = useNavigate();
   const patient = getPatient(patientId);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -2306,6 +2308,22 @@ function DiagnosticWorkspace({
   const handleStartAnalysis = () => {
     if (!activeModReady) {
       toast.error(`Upload or load a ${activeModality === "xray" ? "X-Ray" : "MRI"} scan before analysis.`);
+      return;
+    }
+    if (currentRole === "admin") {
+      toast.error("TideCloak Security Block: Hospital Admin cannot run diagnostic inference.", {
+        description: "Root/Admin authority does not override patient consent. Decryption keys are held decentralized by ORKs.",
+      });
+      return;
+    }
+    if (!patientApproved) {
+      toast.error("TideCloak Threshold Gate: Decryption blocked by ORK network.", {
+        description: "Aung Khant Paing has not approved AI analysis. Tap 'Patient Consent' in the top bar to approve.",
+        action: {
+          label: "Approve Consent",
+          onClick: () => toggleConsent(true),
+        },
+      });
       return;
     }
     setShowInputConfirm(true);

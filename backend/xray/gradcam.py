@@ -8,6 +8,7 @@ import torch
 from PIL import Image
 from pytorch_grad_cam import GradCAM
 from pytorch_grad_cam.utils.image import show_cam_on_image
+from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
 
 
 class GradCAMGenerator:
@@ -34,7 +35,11 @@ class GradCAMGenerator:
         try:
             target_layers = self.get_target_layer(model, family)
             cam = GradCAM(model=model, target_layers=target_layers)
-            grayscale_cam = cam(input_tensor=input_tensor)[0, :]
+            with torch.no_grad():
+                out = model(input_tensor)
+                predicted_class = int(torch.argmax(out, dim=1)[0].item())
+            targets = [ClassifierOutputTarget(predicted_class)]
+            grayscale_cam = cam(input_tensor=input_tensor, targets=targets)[0, :]
 
             vis_img = original_image.resize((224, 224))
             vis_np = np.array(vis_img, dtype=np.float32) / 255.0

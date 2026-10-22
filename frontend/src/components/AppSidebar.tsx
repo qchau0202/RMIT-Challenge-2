@@ -2,14 +2,17 @@ import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Users, Scan, FileText, Settings, Activity, User, LogOut,
-  PanelLeftClose, PanelLeft
+  PanelLeftClose, PanelLeft, ShieldCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { NotificationCenter } from "./NotificationCenter";
 
+import { useTideTrust } from "@/context/TideTrustContext";
+
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { icon: ShieldCheck, label: "Tide Trust Demo", path: "/trust-demo" },
   { icon: Users, label: "Patients", path: "/patients" },
   { icon: Scan, label: "Diagnostics", path: "/diagnostics" },
   { icon: FileText, label: "Reports", path: "/reports" },
@@ -19,6 +22,7 @@ const navItems = [
 function SidebarContent({ collapsed, onNavigate, onToggle }: { collapsed: boolean; onNavigate?: () => void; onToggle?: () => void }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { currentUser, setShowAuthModal } = useTideTrust();
 
   return (
     <div className="flex flex-col h-full">
@@ -26,7 +30,7 @@ function SidebarContent({ collapsed, onNavigate, onToggle }: { collapsed: boolea
       <div className={cn("h-14 flex items-center border-b border-sidebar-border flex-shrink-0", collapsed ? "justify-center px-2" : "justify-between px-4")}>
         <div className={cn("flex items-center gap-2", collapsed && "justify-center")}>
           <div className="rounded-lg flex items-center justify-center flex-shrink-0">
-            <img src="/public/KneeXpert.png" alt="KneeXpert" className="w-10 h-10" />
+            <img src="/KneeXpert.png" alt="KneeXpert" className="w-10 h-10" />
           </div>
           {!collapsed && (
             <motion.span
@@ -95,31 +99,36 @@ function SidebarContent({ collapsed, onNavigate, onToggle }: { collapsed: boolea
         <NotificationCenter collapsed={collapsed} />
       </div>
 
-      {/* User section */}
+      {/* User section with TideCloak Identity */}
       <div className="border-t border-sidebar-border p-3 flex-shrink-0">
         <div className={cn("flex items-center gap-3", collapsed && "justify-center")}>
           <button
-            onClick={() => { navigate("/profile"); onNavigate?.(); }}
-            className={cn("flex items-center gap-3 flex-1 min-w-0 rounded-lg p-1 -m-1 hover:bg-sidebar-accent/50 transition-colors", collapsed && "justify-center")}
-            title="View Profile"
+            onClick={() => { setShowAuthModal(true); onNavigate?.(); }}
+            className={cn("flex items-center gap-2.5 flex-1 min-w-0 rounded-lg p-1.5 -m-1 hover:bg-sidebar-accent/50 transition-colors group", collapsed && "justify-center")}
+            title="TideCloak Identity & Role Inspector"
           >
-            <div className="rounded-lg flex items-center justify-center flex-shrink-0">
-             <img src="/public/KneeXpert.png" alt="KneeXpert" className="w-8 h-8" />
+            <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 font-bold text-xs text-primary">
+              {currentUser.role === "doctor" ? "🩺" : currentUser.role === "patient" ? "📱" : "⚠️"}
             </div>
             {!collapsed && (
               <div className="flex-1 min-w-0 text-left">
-                <p className="text-xs font-medium text-sidebar-accent-foreground truncate">Dr. Quốc Châu</p>
-                <p className="text-[10px] text-sidebar-foreground/60 truncate">Radiologist</p>
+                <div className="flex items-center gap-1.5">
+                  <p className="text-xs font-semibold text-sidebar-accent-foreground truncate">{currentUser.name}</p>
+                </div>
+                <p className="text-[10px] text-muted-foreground truncate flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
+                  {currentUser.title}
+                </p>
               </div>
             )}
           </button>
           {!collapsed && (
             <button
-              onClick={() => navigate("/login")}
-              className="text-sidebar-foreground hover:text-sidebar-accent-foreground transition-colors p-1 rounded-md hover:bg-sidebar-accent/50"
-              title="Log out"
+              onClick={() => setShowAuthModal(true)}
+              className="text-sidebar-foreground hover:text-sidebar-accent-foreground transition-colors p-1.5 rounded-md hover:bg-sidebar-accent/50"
+              title="TideCloak Access Inspector"
             >
-              <LogOut className="w-3.5 h-3.5" />
+              <ShieldCheck className="w-4 h-4 text-primary" />
             </button>
           )}
         </div>

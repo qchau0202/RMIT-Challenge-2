@@ -142,22 +142,22 @@ export interface Patient {
 export const mockPatients: Patient[] = [
   {
     id: "PT-8842",
-    name: "Nguyễn Văn An",
-    age: 65,
+    name: "Aung Khant Paing",
+    age: 28,
     gender: "Male",
-    bmi: 27.3,
-    history: "Chronic bilateral knee pain, 3 years. Previous meniscus repair (2019).",
-    symptoms: "Morning stiffness >30min, crepitus on flexion, reduced ROM.",
-    painLevel: 7,
+    bmi: 24.2,
+    history: "Bilateral knee joint pain for 18 months, sports injury history.",
+    symptoms: "Crepitus on deep flexion, joint line tenderness, stiffness after resting.",
+    painLevel: 6,
     grade: 3,
     aiConfidence: 94.2,
-    lastVisit: "2026-03-15",
-    status: "confirmed",
+    lastVisit: "2026-10-20",
+    status: "pending",
     modality: "xray",
     scans: [
       {
-        id: "SCN-8842-01", modality: "xray", date: "2026-03-15", view: "AP", region: "Bilateral Knee",
-        grade: 3, aiConfidence: 94.2, modelUsed: "DenseNet201 (Ensemble)",
+        id: "SCN-8842-01", modality: "xray", date: "2026-10-20", view: "AP", region: "Bilateral Knee",
+        grade: 3, aiConfidence: 94.2, modelUsed: "KneeXpert Ensemble (Tide E2EE)",
         preprocessing: ["CLAHE", "Denoise", "Normalization"],
       },
       {

@@ -18,6 +18,8 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import { AdminOverviewPage, AdminUsersPage, AdminAITrainingPage, AdminDatasetsPage, AdminModelsPage, AdminMRIPipelinePage, AdminSystemPage } from "./pages/AdminPage";
+import TideTrustDemoPage from "./pages/TideTrustDemoPage";
+import { TideTrustProvider } from "@/context/TideTrustContext";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,10 +28,11 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <PatientProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
+        <TideTrustProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
           <Routes>
             {/* Auth routes - no layout */}
             <Route path="/login" element={<LoginPage />} />
@@ -50,6 +53,7 @@ const App = () => (
             {/* Doctor routes - persistent layout */}
             <Route element={<AppLayout><Outlet /></AppLayout>}>
               <Route path="/" element={<DashboardPage />} />
+              <Route path="/trust-demo" element={<TideTrustDemoPage />} />
               <Route path="/patients" element={<PatientsPage />} />
               <Route path="/diagnostics" element={<DiagnosticsPage />} />
               <Route path="/reports" element={<ReportsHubPage />} />
@@ -61,6 +65,7 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
+      </TideTrustProvider>
       </PatientProvider>
     </ThemeProvider>
   </QueryClientProvider>

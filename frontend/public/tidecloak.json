@@ -1,0 +1,12 @@
+{
+  "realm": "myrealm",
+  "auth-server-url": "http://100.99.89.119:8080/",
+  "ssl-required": "none",
+  "resource": "myclient",
+  "public-client": true,
+  "confidential-port": 0,
+  "useDPoP": {
+    "mode": "strict",
+    "alg": "ES256"
+  }
+}

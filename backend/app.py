@@ -20,6 +20,7 @@ from model_profiler import get_all_flops, get_model_flops_for_response
 from rag.schemas import FeedbackGenerateRequest, FeedbackGenerateResponse
 from rag.service import CorpusNotIndexed, generate_clinical_note
 from rag.status import rag_health
+from tide_trust import router as tide_router
 
 app = FastAPI(title="KneeXpert Backbone API", version="1.0.0")
 
@@ -30,6 +31,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(tide_router)
 
 _loader = ModelLoader()
 VALID_MODELS = set(_loader.list_available())

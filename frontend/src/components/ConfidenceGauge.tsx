@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
 
 interface ConfidenceGaugeProps {
-  value: number | null;
+  value?: number | null;
   className?: string;
 }
 
 export function ConfidenceGauge({ value, className }: ConfidenceGaugeProps) {
-  if (value === null) return <span className="text-xs text-muted-foreground">—</span>;
+  if (value == null || isNaN(value)) return <span className="text-xs text-muted-foreground">—</span>;
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
