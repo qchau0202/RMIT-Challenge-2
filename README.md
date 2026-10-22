@@ -188,7 +188,14 @@ This runs 4 cryptographic assertions directly against the running API:
 
 ## 6. Video Demo (1:30 - 2:00 Minutes)
 
-<video width="640" height="360" controls>
-  <source src="/RMIT Hackathon.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[![Watch on GitHub](https://img.shields.io/badge/Demo%20Video-Watch%20on%20GitHub-181717?style=for-the-badge&logo=github)](https://github.com/qchau0202/RMIT-Challenge-2/blob/main/RMIT%20Hackathon.mp4)
+
+* **Direct GitHub Player:** [Watch `RMIT Hackathon.mp4` on GitHub](https://github.com/qchau0202/RMIT-Challenge-2/blob/main/RMIT%20Hackathon.mp4)
+* **Google Drive Backup Stream:** [Watch on Google Drive](https://drive.google.com/drive/folders/1qCv1yTfnTAT2-BhV5zzLUwdWZtWyVHAw?usp=sharing)
+* **Local Repository File:** [`./RMIT Hackathon.mp4`](./RMIT%20Hackathon.mp4)
+
+<p align="left">
+  <video src="https://github.com/qchau0202/RMIT-Challenge-2/raw/main/RMIT%20Hackathon.mp4" controls width="100%" style="max-width: 680px; border-radius: 8px;">
+    Your browser does not support the video tag. <a href="https://github.com/qchau0202/RMIT-Challenge-2/blob/main/RMIT%20Hackathon.mp4">Click here to watch the demo video directly on GitHub</a>.
+  </video>
+</p>
